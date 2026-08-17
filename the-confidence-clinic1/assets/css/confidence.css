@@ -1,0 +1,619 @@
+/*
+	The Confidence Clinic — brand layer on top of Spectral (HTML5 UP).
+	Loaded AFTER main.css. Only recolours / retypes the template; the
+	layout, breakpoints and interactions of Spectral stay untouched.
+*/
+
+:root {
+	--brand: #28199e;			/* huisstijl paars */
+	--brand-deep: #1b1070;		/* donkerder vlak (footer / spotlights basis) */
+	--brand-tint: rgba(40, 25, 158, 0.08);
+	--paper: #f4f1ea;			/* zacht crème i.p.v. hard wit */
+	--paper-alt: #eae5db;		/* iets dieper crème voor contrastvlakken */
+	--ink: #2b2b31;				/* zachte zwart voor bodytekst */
+	--ink-soft: #5c5c66;		/* gedempt grijs voor secundaire tekst */
+	--rule: #ddd6ca;			/* haarlijnen op lichte vlakken */
+	--fg-on-brand: rgba(255, 255, 255, 0.82);
+	--fg-on-brand-soft: rgba(255, 255, 255, 0.6);
+}
+
+/* ------------------------------------------------------------------ *
+ * Typografie — Arial, uppercase, ruime letterspacing (huisstijl)
+ * ------------------------------------------------------------------ */
+
+body,
+input, select, textarea,
+button, .button,
+h1, h2, h3, h4, h5, h6 {
+	font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, sans-serif;
+}
+
+body {
+	letter-spacing: 0.04em;
+	background: var(--brand-deep);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	font-weight: 700;
+}
+
+h2 {
+	line-height: 1.35;
+}
+
+/* ------------------------------------------------------------------ *
+ * Achtergrondvideo — vervangt banner.jpg van Spectral
+ * ------------------------------------------------------------------ */
+
+body.landing #page-wrapper,
+#page-wrapper {
+	background: none !important;
+}
+
+#bg-video {
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden;
+	/* stilstaand beeld als de video nog laadt of niet kan afspelen */
+	background: url("../../images/pic-treatment.jpg") center center / cover no-repeat, var(--brand-deep);
+}
+
+#bg-video video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	background: url("../../images/pic-treatment.jpg") center center / cover no-repeat;
+}
+
+#bg-video .scrim {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(to bottom, rgba(27, 16, 112, 0.32), rgba(27, 16, 112, 0.32)),
+		rgba(0, 0, 0, 0.34);
+}
+
+/* Spectral zet op kleine schermen een losse achtergrond op de CTA — niet nodig,
+   de videolaag staat er al vast achter. */
+body.landing .wrapper.style4,
+body.is-mobile.landing .wrapper.style4,
+body.is-mobile.landing #banner,
+.wrapper.style4,
+#banner {
+	background-image: none !important;
+	background-color: transparent !important;
+}
+
+/* ------------------------------------------------------------------ *
+ * Header
+ * ------------------------------------------------------------------ */
+
+#header {
+	background: var(--paper);
+	box-shadow: inset 0 -2px 0 var(--rule);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+#header.alt {
+	background: rgba(40, 25, 158, 0.1);
+	box-shadow: none;
+}
+
+#header h1 a {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+#header h1 img {
+	height: 34px;
+	width: auto;
+	display: block;
+}
+
+#header nav > ul > li > a {
+	color: var(--brand);
+	font-weight: 700;
+}
+
+#header.alt nav > ul > li > a {
+	color: #ffffff;
+}
+
+/* hamburger via mask, zodat hij exact de huisstijlkleur aanneemt */
+#header nav > ul > li > a.menuToggle:after {
+	background-image: none;
+	background-color: var(--brand);
+	-webkit-mask: url("images/bars.svg") right center / auto no-repeat;
+	mask: url("images/bars.svg") right center / auto no-repeat;
+}
+
+#header.alt nav > ul > li > a.menuToggle:after {
+	background-color: #ffffff;
+}
+
+@media screen and (max-width: 736px) {
+	#header h1 img { height: 26px; }
+}
+
+/* Uitschuifmenu */
+
+#menu {
+	background: var(--brand);
+}
+
+#menu ul > li {
+	border-top-color: rgba(255, 255, 255, 0.25);
+}
+
+#menu ul > li > a {
+	color: #ffffff;
+	text-transform: uppercase;
+	letter-spacing: 0.18em;
+}
+
+#menu .close:before {
+	filter: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Banner
+ * ------------------------------------------------------------------ */
+
+#banner .inner {
+	padding: 0 2em;
+}
+
+#banner h2 {
+	padding: 0.9em 1.5em;
+}
+
+#banner h2 img {
+	display: block;
+	width: min(420px, 62vw);
+	height: auto;
+}
+
+#banner h2 .label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+#banner h2:before,
+#banner h2:after {
+	background: #ffffff;
+	height: 2px;
+}
+
+#banner p {
+	color: #ffffff;
+	letter-spacing: 0.225em;
+	font-size: 1.05em;
+	line-height: 2;
+}
+
+#banner p a {
+	border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+#banner .more {
+	color: #ffffff;
+	font-weight: 700;
+}
+
+#banner:after {
+	background: var(--brand-deep);
+}
+
+@media screen and (max-width: 736px) {
+	#banner .inner { padding: 0; }
+	#banner h2 { padding: 0.7em 0.9em; }
+	#banner h2 img { width: min(300px, 58vw); }
+	#banner p { font-size: 0.9em; letter-spacing: 0.18em; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Vlakken — licht / paars / licht, zoals Spectral licht/donker afwisselt
+ * ------------------------------------------------------------------ */
+
+/* ---- style1 (#one) : wit vlak ---- */
+
+.wrapper.style1 {
+	background-color: var(--paper);
+	color: var(--ink);
+}
+
+.wrapper.style1 strong,
+.wrapper.style1 b,
+.wrapper.style1 h2,
+.wrapper.style1 h3,
+.wrapper.style1 h4,
+.wrapper.style1 h5,
+.wrapper.style1 h6 {
+	color: var(--brand);
+}
+
+.wrapper.style1 header p,
+.wrapper.style1 header.major p {
+	color: var(--ink-soft);
+}
+
+.wrapper.style1 header.major h2,
+.wrapper.style1 header.major h3,
+.wrapper.style1 header.major h4,
+.wrapper.style1 header.major h5,
+.wrapper.style1 header.major h6 {
+	border-color: var(--brand);
+}
+
+.wrapper.style1 .icon.major {
+	border-color: var(--brand);
+	color: var(--brand);
+}
+
+.wrapper.style1 hr,
+.wrapper.style1 ul.alt li,
+.wrapper.style1 table tbody tr {
+	border-color: var(--rule);
+}
+
+.kernwaarden {
+	color: var(--brand);
+	text-transform: uppercase;
+	letter-spacing: 0.225em;
+	font-size: 0.8em;
+	font-weight: 700;
+	margin: 1.5em 0 0 0;
+}
+
+/* ---- style2 (#two) : huisstijlpaars, spotlights ---- */
+
+.wrapper.style2 {
+	background-color: var(--brand);
+	color: var(--fg-on-brand);
+}
+
+.wrapper.style2 h2,
+.wrapper.style2 h3,
+.wrapper.style2 strong,
+.wrapper.style2 b {
+	color: #ffffff;
+}
+
+.spotlight .content {
+	position: relative;
+}
+
+/* huisstijl-omrastering: haarlijn tussen beeld en tekst */
+.spotlight .image {
+	position: relative;
+}
+
+.spotlight .image:after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+	pointer-events: none;
+}
+
+.spotlight .image img {
+	display: block;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+/* Tweede spotlight omgekeerd: crème vlak, huisstijlpaarse kop, donkere tekst */
+
+#two .spotlight:nth-child(2) {
+	background-color: var(--paper);
+	color: var(--ink);
+}
+
+#two .spotlight:nth-child(2) h2,
+#two .spotlight:nth-child(2) h3,
+#two .spotlight:nth-child(2) strong,
+#two .spotlight:nth-child(2) b {
+	color: var(--brand);
+}
+
+#two .spotlight:nth-child(2) p {
+	color: var(--ink);
+}
+
+#two .spotlight:nth-child(2) .image:after {
+	box-shadow: inset 0 0 0 2px rgba(40, 25, 158, 0.15);
+}
+
+@media screen and (max-width: 980px) {
+	.spotlight .image img { aspect-ratio: 16 / 9; }
+}
+
+/* ---- style3 (#three) : wit vlak met haarlijnraster ---- */
+
+.wrapper.style3 {
+	background-color: var(--paper);
+	color: var(--ink);
+}
+
+.wrapper.style3 strong,
+.wrapper.style3 b,
+.wrapper.style3 h2,
+.wrapper.style3 h3,
+.wrapper.style3 h4,
+.wrapper.style3 h5,
+.wrapper.style3 h6 {
+	color: var(--brand);
+}
+
+.wrapper.style3 header p,
+.wrapper.style3 header.major p {
+	color: var(--ink-soft);
+}
+
+.wrapper.style3 header.major h2,
+.wrapper.style3 header.major h3 {
+	border-color: var(--brand);
+}
+
+.wrapper.style3 .features li {
+	background-color: transparent !important;
+	border-top: solid 2px var(--rule);
+	border-radius: 0 !important;
+}
+
+.wrapper.style3 .features li:nth-child(2n) {
+	border-left: solid 2px var(--rule);
+}
+
+.wrapper.style3 .features li:nth-child(1),
+.wrapper.style3 .features li:nth-child(2) {
+	border-top: 0;
+}
+
+.wrapper.style3 .features li:before {
+	color: var(--brand);
+}
+
+.wrapper.style3 .features li h3 {
+	letter-spacing: 0.14em;
+}
+
+@media screen and (max-width: 736px) {
+	.wrapper.style3 .features li {
+		border-left: 0 !important;
+		border-top: solid 2px var(--rule);
+	}
+	.wrapper.style3 .features li:nth-child(2) { border-top: solid 2px var(--rule); }
+	.wrapper.style3 .features li:first-child { border-top: 0; }
+}
+
+/* ---- style4 (#cta) : transparant, video erachter ---- */
+
+#cta {
+	color: #ffffff;
+}
+
+#cta h2 {
+	color: #ffffff;
+}
+
+#cta header p {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+/* NL-labels zijn langer dan de Engelse van het template — meer ruimte voor de knoppen */
+#cta .inner {
+	max-width: 52em;
+}
+
+#cta .inner header {
+	width: 58%;
+}
+
+#cta .inner .actions {
+	width: 42%;
+}
+
+#cta .button {
+	padding: 0 1.25em;
+	letter-spacing: 0.14em;
+}
+
+@media screen and (max-width: 980px) {
+	#cta .inner header,
+	#cta .inner .actions { width: 100%; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Knoppen
+ * ------------------------------------------------------------------ */
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.button {
+	border-radius: 0;
+	letter-spacing: 0.225em;
+	font-weight: 700;
+}
+
+/* op donkere vlakken (banner, spotlights, cta, footer) blijft de witte omranding */
+
+.button.primary {
+	background-color: var(--paper) !important;
+	color: var(--brand) !important;
+}
+
+.button.primary:hover {
+	background-color: #ffffff !important;
+}
+
+.button.primary:active {
+	background-color: var(--paper-alt) !important;
+}
+
+/* op lichte vlakken keert het om */
+
+.wrapper.style1 .button,
+.wrapper.style3 .button {
+	box-shadow: inset 0 0 0 2px var(--brand);
+	color: var(--brand);
+}
+
+.wrapper.style1 .button:hover,
+.wrapper.style3 .button:hover {
+	background-color: var(--brand-tint);
+}
+
+.wrapper.style1 .button.primary,
+.wrapper.style3 .button.primary {
+	background-color: var(--brand) !important;
+	color: #ffffff !important;
+}
+
+.wrapper.style1 .button.primary:hover,
+.wrapper.style3 .button.primary:hover {
+	background-color: #3423c6 !important;
+}
+
+/* ------------------------------------------------------------------ *
+ * Iconen
+ * ------------------------------------------------------------------ */
+
+.icon.major {
+	border-radius: 0;
+}
+
+.icon.style1,
+.icon.style2,
+.icon.style3,
+.icon.style4 {
+	color: var(--brand);
+}
+
+/* ------------------------------------------------------------------ *
+ * Footer
+ * ------------------------------------------------------------------ */
+
+#footer,
+body.landing #footer,
+body.is-mobile.landing #footer {
+	background-color: rgba(27, 16, 112, 0.92);
+	color: var(--fg-on-brand);
+}
+
+#footer .inner {
+	width: 60em;
+	max-width: 90%;
+	margin: 0 auto 3em auto;
+}
+
+#footer .footer-logo {
+	border: 0;
+	display: inline-block;
+	margin: 0 0 2.5em 0;
+}
+
+#footer .footer-logo img {
+	width: 260px;
+	max-width: 70vw;
+	height: auto;
+	display: block;
+}
+
+#footer .contact {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2em 3.5em;
+	font-size: 0.85em;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	line-height: 1.9;
+}
+
+#footer .contact li {
+	padding: 0 0 0 2em;
+	position: relative;
+	text-align: left;
+}
+
+#footer .contact li:before {
+	position: absolute;
+	left: 0;
+	top: 0.15em;
+	color: #ffffff;
+}
+
+#footer .contact a {
+	border-bottom-color: rgba(255, 255, 255, 0.4);
+	color: inherit;
+}
+
+#footer .icons a {
+	color: var(--fg-on-brand-soft);
+}
+
+#footer .icons a:hover {
+	color: #ffffff;
+}
+
+#footer .copyright {
+	color: var(--fg-on-brand-soft);
+	letter-spacing: 0.18em;
+}
+
+#footer .copyright li {
+	border-left-color: rgba(255, 255, 255, 0.35);
+}
+
+@media screen and (max-width: 736px) {
+	#footer .contact {
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5em;
+	}
+	#footer .contact li { text-align: center; padding: 2.2em 0 0 0; }
+	#footer .contact li:before { left: 50%; transform: translateX(-50%); top: 0; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Diversen
+ * ------------------------------------------------------------------ */
+
+a {
+	color: inherit;
+}
+
+.wrapper.style1 a,
+.wrapper.style3 a {
+	color: var(--brand);
+}
+
+::selection {
+	background: var(--brand);
+	color: #ffffff;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--brand) #e6e6f6;
+}
+
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--brand); }
+*::-webkit-scrollbar-track { background: #e6e6f6; }
