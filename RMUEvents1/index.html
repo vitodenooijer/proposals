@@ -26,9 +26,18 @@
     <nav class="nav-main" aria-label="Hoofdmenu">
       <ul>
         <li><a href="#top" class="is-current">Home</a></li>
-        <li><a href="#nieuws">Visserijdagen</a></li>
-        <li><a href="#nieuws">Klederdracht</a></li>
-        <li><a href="#nieuws">Historie</a></li>
+        <li class="heeft-submenu">
+          <button type="button" class="submenu-knop" aria-expanded="false" aria-controls="submenu-activiteiten">
+            Activiteiten
+            <svg class="chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+          <ul id="submenu-activiteiten" class="submenu">
+            <li><a href="visserijdagen.html">Visserijdagen</a></li>
+            <li><a href="#nieuws">Klederdracht</a></li>
+            <li><a href="#nieuws">Arnemuiden in oude foto&rsquo;s</a></li>
+            <li><a href="#nieuws">Oudjaar</a></li>
+          </ul>
+        </li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -56,9 +65,20 @@
   <nav aria-label="Menu">
     <ul class="menu-links">
       <li><a href="#top">Home</a></li>
-      <li><a href="#nieuws">Visserijdagen</a></li>
-      <li><a href="#nieuws">Klederdracht</a></li>
-      <li><a href="#nieuws">Historie</a></li>
+      <li class="menu-groep">
+        <button type="button" class="menu-groep-knop" aria-expanded="false" aria-controls="menu-activiteiten">
+          Activiteiten
+          <svg class="chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <div class="menu-subwrap">
+          <ul id="menu-activiteiten" class="menu-sublinks">
+            <li><a href="visserijdagen.html">Visserijdagen</a></li>
+            <li><a href="#nieuws">Klederdracht</a></li>
+            <li><a href="#nieuws">Arnemuiden in oude foto&rsquo;s</a></li>
+            <li><a href="#nieuws">Oudjaar</a></li>
+          </ul>
+        </div>
+      </li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -127,13 +147,13 @@
     <div class="nieuws-raster">
 
       <article class="nieuws-item">
-        <a class="nieuws-beeld" href="#nieuws"><img src="assets/img/braderie.jpg" alt="Drukte op de braderie: kramen en bezoekers in de straten van Arnemuiden"></a>
+        <a class="nieuws-beeld" href="visserijdagen.html"><img src="assets/img/braderie.jpg" alt="Drukte op de braderie: kramen en bezoekers in de straten van Arnemuiden"></a>
         <div class="nieuws-inhoud">
           <p class="meta">24 – 26 juni 2027</p>
-          <h3><a href="#nieuws">Visserijdagen Arnemuiden</a></h3>
+          <h3><a href="visserijdagen.html">Visserijdagen Arnemuiden</a></h3>
           <p>Drie dagen folklore, braderie en muziek. Overal Arnemuidse vlaggen door het straatbeeld
             en een programma dat voor en door Arnemuiden gemaakt is.</p>
-          <a class="button small" href="#nieuws">Meer lezen</a>
+          <a class="button small" href="visserijdagen.html">Meer lezen</a>
         </div>
       </article>
 
@@ -209,7 +229,7 @@
     <div class="voet-kolom">
       <h2>Activiteiten</h2>
       <ul>
-        <li><a href="#nieuws">Visserijdagen</a></li>
+        <li><a href="visserijdagen.html">Visserijdagen</a></li>
         <li><a href="#nieuws">Klederdracht</a></li>
         <li><a href="#nieuws">Arnemuiden in oude foto's</a></li>
         <li><a href="#nieuws">Oudjaar</a></li>

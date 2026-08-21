@@ -18,7 +18,12 @@
      balk sprong dan meteen in zijn vaste vorm. Bovendien vuurt een
      observer alleen bij een drempelovergang, en tussen "onder het scherm"
      en "boven het scherm" is er geen: na een sprong bleef de stand hangen. */
-  if (header && hero && 'IntersectionObserver' in window) {
+  if (header && !hero) {
+    /* Subpagina: geen banner om overheen te liggen, dus de balk staat
+       meteen in zijn vaste vorm. (Staat ook al in de HTML, zodat hij niet
+       eerst doorzichtig opkomt.) */
+    header.classList.add('is-vast');
+  } else if (header && hero && 'IntersectionObserver' in window) {
     /* Eén keer vastleggen: zodra de balk vast staat krimpt hij, en een
        meebewegende grens laat hem heen en weer klapperen. */
     var balkHoogte = header.offsetHeight;
@@ -128,6 +133,50 @@
     // Terug naar breed scherm terwijl het menu open staat: opruimen.
     window.addEventListener('resize', function () {
       if (window.innerWidth > 1100 && document.body.classList.contains('menu-open')) zetOpen(false);
+    });
+  }
+
+  /* ---------- Uitklapbare menu-items ----------
+     Twee smaken van dezelfde knop: "Activiteiten" in de balk (klapt open
+     onder de knop) en dezelfde groep in het schuifmenu (vouwt de lijst
+     eronder uit). Op een breed scherm doet :hover in de CSS het werk; deze
+     klik is er voor aanraakschermen en het toetsenbord. */
+  var uitklapKnoppen = [].slice.call(
+    document.querySelectorAll('.submenu-knop, .menu-groep-knop')
+  );
+
+  var sluitBalkmenus = function (behalve) {
+    [].slice.call(document.querySelectorAll('.heeft-submenu.is-open')).forEach(function (li) {
+      if (li === behalve) return;
+      li.classList.remove('is-open');
+      var b = li.querySelector('.submenu-knop');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  };
+
+  uitklapKnoppen.forEach(function (knopje) {
+    var groep = knopje.parentNode;
+    knopje.addEventListener('click', function () {
+      var open = !groep.classList.contains('is-open');
+      if (groep.classList.contains('heeft-submenu')) sluitBalkmenus(groep);
+      groep.classList.toggle('is-open', open);
+      knopje.setAttribute('aria-expanded', String(open));
+    });
+  });
+
+  if (uitklapKnoppen.length) {
+    // Ergens anders klikken of Escape: de balkmenu's weer dicht. Het
+    // schuifmenu blijft staan; dat heeft zijn eigen sluitknop.
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.heeft-submenu')) sluitBalkmenus();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') sluitBalkmenus();
+    });
+    // Met de muis het menu uit is ook "dicht"; anders blijft een eerder
+    // aangeklikt menu open hangen naast wat de hover laat zien.
+    [].slice.call(document.querySelectorAll('.heeft-submenu')).forEach(function (li) {
+      li.addEventListener('mouseleave', function () { sluitBalkmenus(); });
     });
   }
 

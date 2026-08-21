@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visserijdagen &mdash; RMU Events Arnemuiden</title>
+  <meta name="description" content="Jaarlijks organiseert stichting RMU Events de Visserijdagen Arnemuiden: braderie, ringrijden, rondvaarten, livemuziek en overal klederdracht en Arnemuidse vlaggen.">
+  <link rel="icon" href="assets/img/logo-rmu.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="subpagina">
+
+<a class="skip-link" href="#inhoud">Naar de inhoud</a>
+
+<!-- ============ Menubalk ============ -->
+<header id="header" class="is-vast">
+  <div class="header-inner">
+
+    <a class="logo" href="index.html#top" aria-label="RMU Events — naar boven">
+      <img src="assets/img/logo-rmu.png" alt="RMU Events Arnemuiden">
+    </a>
+
+    <nav class="nav-main" aria-label="Hoofdmenu">
+      <ul>
+        <li><a href="index.html#top">Home</a></li>
+        <li class="heeft-submenu">
+          <button type="button" class="submenu-knop" aria-expanded="false" aria-controls="submenu-activiteiten">
+            Activiteiten
+            <svg class="chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+          <ul id="submenu-activiteiten" class="submenu">
+            <li><a href="visserijdagen.html" class="is-current" aria-current="page">Visserijdagen</a></li>
+            <li><a href="index.html#nieuws">Klederdracht</a></li>
+            <li><a href="index.html#nieuws">Arnemuiden in oude foto&rsquo;s</a></li>
+            <li><a href="index.html#nieuws">Oudjaar</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <span class="actions-label">Aanmelden</span>
+      <a class="button primary" href="index.html#nieuws">Braderie</a>
+      <a class="button primary" href="index.html#nieuws">Vrijwilligers</a>
+    </div>
+
+    <button id="menu-toggle" class="menu-toggle" aria-label="Menu openen" aria-expanded="false" aria-controls="menu-paneel">
+      <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+
+  </div>
+</header>
+
+<!-- Uitklapmenu op smalle schermen -->
+<div id="menu-overlay" hidden></div>
+<aside id="menu-paneel" class="menu-paneel" aria-label="Menu" hidden>
+  <button id="menu-sluiten" class="menu-sluiten" aria-label="Menu sluiten">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+
+  <nav aria-label="Menu">
+    <ul class="menu-links">
+      <li><a href="index.html#top">Home</a></li>
+      <li class="menu-groep">
+        <button type="button" class="menu-groep-knop" aria-expanded="false" aria-controls="menu-activiteiten">
+          Activiteiten
+          <svg class="chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <div class="menu-subwrap">
+          <ul id="menu-activiteiten" class="menu-sublinks">
+            <li><a href="visserijdagen.html" class="is-current" aria-current="page">Visserijdagen</a></li>
+            <li><a href="index.html#nieuws">Klederdracht</a></li>
+            <li><a href="index.html#nieuws">Arnemuiden in oude foto&rsquo;s</a></li>
+            <li><a href="index.html#nieuws">Oudjaar</a></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="menu-aanmelden">
+    <h2>Aanmelden</h2>
+    <a class="button primary fit" href="index.html#nieuws">Braderie</a>
+    <a class="button primary fit" href="index.html#nieuws">Vrijwilligers</a>
+  </div>
+
+  <ul class="menu-socials">
+    <li><a href="https://www.facebook.com/rmuevents" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 22v-8.6h2.9l.43-3.36H13.6V7.9c0-.97.27-1.63 1.66-1.63h1.78V3.26c-.31-.04-1.36-.13-2.58-.13-2.55 0-4.3 1.56-4.3 4.42v2.47H7.23v3.36h2.93V22z"/></svg></a></li>
+    <li><a href="https://www.instagram.com/rmuevents/" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.9" cy="7.1" r="1.15"/></svg></a></li>
+    <li><a href="https://www.youtube.com/@StichtingRMUEvents" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.78C18.25 5 12 5 12 5s-6.25 0-7.81.41c-.86.23-1.54.91-1.77 1.78C2 8.76 2 12 2 12s0 3.24.42 4.81c.23.87.91 1.55 1.77 1.78C5.75 19 12 19 12 19s6.25 0 7.81-.41a2.51 2.51 0 0 0 1.77-1.78C22 15.24 22 12 22 12s0-3.24-.42-4.81zM10.15 15.02V8.98L15.4 12z"/></svg></a></li>
+  </ul>
+</aside>
+
+<!-- ============ Artikel ============ -->
+<main id="inhoud">
+<!-- Sierrand met het Arnemuidse slangenpatroon; puur decoratief, en alleen
+     zichtbaar als er naast de inhoud ruimte voor is. -->
+<div class="randpatroon randpatroon--links" aria-hidden="true"></div>
+<div class="randpatroon randpatroon--rechts" aria-hidden="true"></div>
+
+<article class="artikel">
+  <div class="container">
+
+    <nav class="kruimels" aria-label="Kruimelpad">
+      <a href="index.html#top">Home</a>
+      <span aria-hidden="true">&rsaquo;</span>
+      <span>Activiteiten</span>
+      <span aria-hidden="true">&rsaquo;</span>
+      <span aria-current="page">Visserijdagen</span>
+    </nav>
+
+    <header class="sectie-kop">
+      <p class="meta">24 t/m 26 juni 2027</p>
+      <h1>Visserijdagen</h1>
+      <p class="sectie-intro">Jaarlijks organiseert stichting RMU Events Visserijdagen Arnemuiden.</p>
+    </header>
+
+    <div class="artikel-tekst">
+      <p>Stichting RMU Events is organisator van het gehele event. Ons stadje zal weer bruisen van
+        allerlei activiteiten en folklore. Maar veel belangrijker: overal Arnemuidse vlaggen en
+        vlaggenlijnen door het straatbeeld en vele Arnemuidenaren in ouderwetse klederdracht of
+        &eacute;&eacute;n van de moderne varianten. Geniet van de braderie, ringrijden en
+        rondvaarten, livemuziek en nog veel meer culturele activiteiten!</p>
+
+      <p>Het programma van de feesttent is voor Arnemuiden en door Arnemuiden en zullen wij voor
+        Arnemuidenaren in de brievenbus stoppen.</p>
+    </div>
+
+    <figure class="artikel-beeld">
+      <img src="assets/img/visserijdagen.jpg"
+           alt="Zonsondergang boven het water bij Arnemuiden, met de silhouetten van een vissersschip aan de kade en de molen achter de bomen" width="1024" height="683">
+    </figure>
+
+  </div>
+</article>
+</main>
+
+<!-- ============ Voettekst ============ -->
+<footer id="contact" class="voettekst">
+  <div class="container voet-raster">
+    <div class="voet-merk">
+      <p class="wordmark">RMU<span>Events</span></p>
+      <p>Stichting voor het behoud van Arnemuiden als karakteristieke vissersplaats.
+        Door Arnemuidenaren, voor Arnemuidenaren.</p>
+    </div>
+
+    <div class="voet-kolom">
+      <h2>Activiteiten</h2>
+      <ul>
+        <li><a href="visserijdagen.html">Visserijdagen</a></li>
+        <li><a href="index.html#nieuws">Klederdracht</a></li>
+        <li><a href="index.html#nieuws">Arnemuiden in oude foto's</a></li>
+        <li><a href="index.html#nieuws">Oudjaar</a></li>
+      </ul>
+    </div>
+
+    <div class="voet-kolom">
+      <h2>Doe mee</h2>
+      <ul>
+        <li><a href="index.html#nieuws">Aanmelden braderie</a></li>
+        <li><a href="index.html#nieuws">Vrijwilliger worden</a></li>
+        <li><a href="index.html#nieuws">Donateurs</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="voet-kolom">
+      <h2>Volg ons</h2>
+      <ul class="voet-socials">
+        <li><a href="https://www.facebook.com/rmuevents" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 22v-8.6h2.9l.43-3.36H13.6V7.9c0-.97.27-1.63 1.66-1.63h1.78V3.26c-.31-.04-1.36-.13-2.58-.13-2.55 0-4.3 1.56-4.3 4.42v2.47H7.23v3.36h2.93V22z"/></svg></a></li>
+        <li><a href="https://www.instagram.com/rmuevents/" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.9" cy="7.1" r="1.15"/></svg></a></li>
+        <li><a href="https://www.youtube.com/@StichtingRMUEvents" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.78C18.25 5 12 5 12 5s-6.25 0-7.81.41c-.86.23-1.54.91-1.77 1.78C2 8.76 2 12 2 12s0 3.24.42 4.81c.23.87.91 1.55 1.77 1.78C5.75 19 12 19 12 19s6.25 0 7.81-.41a2.51 2.51 0 0 0 1.77-1.78C22 15.24 22 12 22 12s0-3.24-.42-4.81zM10.15 15.02V8.98L15.4 12z"/></svg></a></li>
+      </ul>
+      <p class="voet-adres">Arnemuiden, Zeeland<br>info@rmu-events.nl</p>
+    </div>
+  </div>
+
+  <div class="container voet-onder">
+    <p>&copy; <span id="jaar">2026</span> Stichting RMU Events — Arnemuiden</p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
