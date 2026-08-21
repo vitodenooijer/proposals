@@ -1,0 +1,22 @@
+De pagina gebruikt `banner.mp4` (H.264, 1280x720, 39 s, 5,4 MB — precies goed).
+`banner fullquality.mp4` van 93 MB wordt niet geladen; die staat hier alleen als
+bronbestand en kan bij het publiceren van de site weggelaten worden.
+
+Vervangen? Zet de video hier neer als:
+
+    banner.mp4     (verplicht — H.264/AAC, dit speelt overal)
+    banner.webm    (optioneel — VP9, kleiner; wordt gebruikt als de browser dat kan)
+
+De pagina laadt ze automatisch; er hoeft niets in de HTML aangepast te worden.
+
+Tips
+- Liggend, minstens 1920x1080, ~10-20 seconden en naadloos loopend.
+- Zonder geluidsspoor: de video speelt gedempt af (anders blokkeert de browser
+  het automatisch starten) en een audiospoor maakt het bestand alleen zwaarder.
+- Houd 'm onder ~6 MB, anders duurt het laden op mobiel te lang.
+- Zolang er geen video staat, toont de banner de posterfoto
+  (assets/img/braderie.jpg) — te wijzigen in index.html op het attribuut
+  poster="..." van <video class="hero-video">.
+
+De vervaging staat in assets/css/style.css als --hero-blur (nu 5px, op
+smalle schermen 4px). Hoger = waziger.

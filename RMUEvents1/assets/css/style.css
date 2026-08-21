@@ -1,0 +1,674 @@
+/* ============================================================
+   RMU Events — statische homepage (voorstel 1)
+
+   Layout en typografie naar het Wix-sjabloon "Be.Spirit Festival":
+   fullscreen banner, zwevende balk met gecentreerd menu, knop
+   rechtsboven, brede letterspatiëring in condensed hoofdletters.
+   Nieuwsblokken naar HTML5 UP "Editorial".
+
+   Kleuren komen van de bestaande RMU Events-site (het logo):
+     #594c51 pruim · #f1ebc4 crème · #f06060 koraal
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+  --plum:        #594c51;
+  --plum-dark:   #46393d;
+  --plum-darker: #382e31;
+  --ink:         #45383c;
+  --text:        #6f6367;
+  --text-soft:   #97898d;
+  --cream:       #f1ebc4;
+  --cream-soft:  #f8f4dd;
+  --coral:       #f06060;
+  --coral-deep:  #d9504f;
+
+  --bg:      #f2efe8;
+  --card:    #ffffff;
+  --border:  rgba(89, 76, 81, .19);
+  --border-2: rgba(89, 76, 81, .32);
+
+  --font-head: "Barlow Condensed", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --font-body: "Jost", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-script: "Yellowtail", "Brush Script MT", cursive;
+
+  --header-h: 5.5rem;
+  --header-h-klein: 4.5rem;
+
+  /* Hoeveel de bannervideo vervaagt. Eén plek, zodat de zachte
+     schaalvergroting (die de vervaagde randen wegwerkt) meeloopt. */
+  --hero-blur: 8px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* De balk staat vast bovenaan; ankers mogen er niet onder duiken. */
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+body.menu-open { overflow: hidden; }
+
+img { display: block; max-width: 100%; height: auto; border: 0; }
+svg { display: block; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 0 0 .5em 0;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+p { margin: 0 0 1.5em 0; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--coral); text-decoration: none; transition: color .2s ease, background-color .2s ease, border-color .2s ease; }
+a:hover { color: var(--coral-deep); }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+::selection { background: var(--coral); color: #fff; }
+:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+
+.container {
+  width: calc(100% - 4rem);
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.skip-link {
+  position: absolute; left: 50%; top: 0;
+  transform: translate(-50%, -140%);
+  z-index: 11000;
+  background: var(--plum-dark); color: var(--cream);
+  padding: .75em 1.5em;
+  font-family: var(--font-head);
+  font-size: .9rem; letter-spacing: .25em; text-transform: uppercase;
+}
+.skip-link:focus { transform: translate(-50%, 0); color: var(--cream); }
+
+/* ---------- Knoppen ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: .82rem;
+  letter-spacing: .08em;
+  line-height: 1;
+  padding: .95em 1.7em;
+  border: solid 1px transparent;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.button.primary { background: var(--coral); border-color: var(--coral); color: #fff; }
+.button.primary:hover { background: var(--coral-deep); border-color: var(--coral-deep); color: #fff; }
+.button.ghost { border-color: rgba(255, 255, 255, .55); color: #fff; }
+.button.ghost:hover { background: rgba(255, 255, 255, .14); color: #fff; border-color: #fff; }
+.button.small { padding: .8em 1.4em; font-size: .76rem; border-color: var(--border-2); color: var(--ink); }
+.button.small:hover { border-color: var(--coral); color: var(--coral); }
+.button.fit { display: flex; width: 100%; }
+
+/* Kleine crème-tekst boven koppen, precies zoals in het sjabloon. */
+.eyebrow {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  margin: 0 0 .9em 0;
+}
+
+/* ============================================================
+   Menubalk
+   ============================================================ */
+#header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: var(--header-h);
+  background: transparent;
+  transition: background-color .35s ease, height .35s ease, box-shadow .35s ease;
+}
+
+.header-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.75rem 0 0;
+}
+
+/* --- Logo: alleen de afbeelding, vult het hele vlak.
+       Rust 10px uit de hoek; staat op de banner een eigen breedte naar rechts
+       en anderhalf keer zo groot, en schuift op ware grootte terug in de hoek
+       zodra de balk vast wordt. Het groeipunt ligt linksboven, anders loopt de
+       vergroting boven de schermrand af. --- */
+#header .logo {
+  display: block;
+  align-self: stretch;
+  aspect-ratio: 1;
+  margin: 0 0 0 10px;
+  padding: 0;
+  background: var(--cream);
+  line-height: 0;
+  transform-origin: left top;
+  transform: translateX(100%) scale(1.5);
+  transition: transform .35s ease;
+}
+#header .logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Gecentreerd menu --- */
+#header .nav-main {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#header .nav-main ul { display: flex; gap: 2.6rem; }
+#header .nav-main a {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .88);
+  padding: .4em 0;
+  position: relative;
+}
+#header .nav-main a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--coral);
+  transform: scaleX(0);
+  transition: transform .25s ease;
+}
+#header .nav-main a:hover,
+#header .nav-main a.is-current { color: var(--coral); }
+#header .nav-main a:hover::after,
+#header .nav-main a.is-current::after { transform: scaleX(1); }
+
+/* --- Label + twee knoppen rechtsboven --- */
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+.nav-actions .button {
+  font-size: 0.9em;
+}
+.actions-label {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .8);
+  margin-right: .3rem;
+  transition: color .35s ease;
+}
+
+/* --- Hamburger (alleen smal) --- */
+.menu-toggle {
+  display: none;
+  margin-left: auto;
+  width: 3rem; height: 3rem;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  transition: color .35s ease;
+}
+.menu-toggle .bars { display: block; width: 1.6rem; }
+.menu-toggle .bars span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  margin: .32rem 0;
+  transition: transform .3s ease, opacity .2s ease;
+}
+
+/* --- Balk zodra hij van de banner af scrolt --- */
+#header.is-vast {
+  height: var(--header-h-klein);
+  background: var(--plum);
+  box-shadow: 0 2px 24px rgba(56, 46, 49, .28);
+}
+/* Het logovlak blijft crème; alleen de balk eromheen verkleurt. */
+#header.is-vast .logo { transform: translateX(0) scale(1); }
+#header.is-vast .nav-main a { color: rgba(241, 235, 196, .82); }
+#header.is-vast .nav-main a:hover,
+#header.is-vast .nav-main a.is-current { color: var(--coral); }
+#header.is-vast .actions-label { color: rgba(241, 235, 196, .7); }
+#header.is-vast .button.ghost { border-color: rgba(241, 235, 196, .5); color: var(--cream); }
+#header.is-vast .button.ghost:hover { background: var(--cream); color: var(--plum-dark); border-color: var(--cream); }
+#header.is-vast .menu-toggle { color: var(--cream); }
+
+/* Liever een lichte balk dan een pruimkleurige? Haal het commentaar om
+   dit blok weg; het overschrijft de regels hierboven één op één.
+
+#header.is-vast { background: var(--cream-soft); box-shadow: 0 2px 20px rgba(89, 76, 81, .16); }
+#header.is-vast .nav-main a { color: var(--plum); }
+#header.is-vast .actions-label { color: var(--text-soft); }
+#header.is-vast .button.ghost { border-color: var(--border-2); color: var(--plum); }
+#header.is-vast .button.ghost:hover { background: var(--plum); color: var(--cream); border-color: var(--plum); }
+#header.is-vast .menu-toggle { color: var(--plum); }
+*/
+
+/* ============================================================
+   Uitklapmenu (smal scherm)
+   ============================================================ */
+#menu-overlay {
+  position: fixed; inset: 0;
+  z-index: 600;
+  background: rgba(56, 46, 49, .6);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+body.menu-open #menu-overlay { opacity: 1; }
+
+.menu-paneel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 700;
+  width: 22rem;
+  max-width: 88vw;
+  background: var(--plum-dark);
+  color: rgba(241, 235, 196, .75);
+  padding: 5rem 2.5rem 3rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: -20px 0 60px -20px rgba(0, 0, 0, .5);
+}
+body.menu-open .menu-paneel { transform: translateX(0); }
+
+.menu-sluiten {
+  position: absolute; top: 1.4rem; right: 1.6rem;
+  width: 2.6rem; height: 2.6rem;
+  display: grid; place-items: center;
+  background: none; border: 0; cursor: pointer;
+  color: rgba(241, 235, 196, .75);
+}
+.menu-sluiten:hover { color: var(--coral); }
+.menu-sluiten svg { width: 1.2rem; height: 1.2rem; }
+
+.menu-links li { border-bottom: solid 1px rgba(241, 235, 196, .14); }
+.menu-links li:first-child { border-top: solid 1px rgba(241, 235, 196, .14); }
+.menu-links a {
+  display: block;
+  padding: .95em 0;
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.menu-links a:hover { color: var(--coral); }
+
+/* De twee knoppen uit de balk komen hier terug, onder hetzelfde
+   kopje "Aanmelden" dat op breed scherm het label ervoor is. */
+.menu-aanmelden { margin: 2.5rem 0 2rem; }
+.menu-aanmelden h2 {
+  font-size: 1rem;
+  letter-spacing: .3em;
+  color: rgba(241, 235, 196, .6);
+  margin-bottom: 1.1em;
+}
+.menu-aanmelden .button + .button { margin-top: .7rem; }
+.menu-aanmelden .button.ghost { border-color: rgba(241, 235, 196, .5); color: var(--cream); }
+.menu-aanmelden .button.ghost:hover { background: var(--cream); color: var(--plum-dark); }
+
+.menu-socials { display: flex; gap: 1rem; }
+.menu-socials a {
+  display: grid; place-items: center;
+  width: 3.4rem; height: 3.4rem;
+  border: solid 1px rgba(241, 235, 196, .28);
+  color: var(--cream);
+}
+.menu-socials svg { width: 1.7rem; height: 1.7rem; fill: currentColor; }
+.menu-socials a:hover { background: var(--coral); border-color: var(--coral); color: #fff; }
+
+/* ============================================================
+   Banner
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--plum-darker);
+  text-align: center;
+  color: #fff;
+}
+
+.hero-media { position: absolute; inset: 0; }
+.hero-video,
+.hero-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* De blur trekt de randen naar binnen; de schaal duwt ze weer
+     buiten beeld, anders zie je een lichte rand rond de video. */
+  filter: blur(var(--hero-blur));
+  transform: scale(1.06);
+}
+
+/* Donkere pruimwas over de video, zodat de witte tekst leesbaar
+   blijft ongeacht welke beelden erin komen. */
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(56, 46, 49, .55) 0%, rgba(56, 46, 49, .32) 38%, rgba(56, 46, 49, .62) 100%),
+    radial-gradient(ellipse at center, rgba(56, 46, 49, .1) 0%, rgba(56, 46, 49, .5) 100%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 3rem);
+  max-width: 56rem;
+  padding: var(--header-h) 0 6rem;
+}
+
+/* Meeschalen met .hero-titel. Die staat op clamp(3rem, 7.2vw, 6rem): hij
+   groeit tussen 667px en 1333px schermbreedte. Deze regel gebruikt dezelfde
+   verhouding (0,4167 x zo groot), dus beide beginnen en stoppen met groeien
+   op precies dezelfde breedte.
+
+   Waarom de 7.2vw uit de titel hier niet werkt: bij die snelheid zit de
+   eyebrow al op 556px op zijn maximum en staat hij op elk normaal scherm
+   stil, terwijl de titel doorgroeit. */
+.hero .eyebrow {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: rgba(255, 255, 255, .78);
+}
+/* Zelfde behandeling als het woordmerk in de balk en de voettekst:
+   "RMU" zwaarder en vol wit, "Events" in koraal. */
+.hero .eyebrow .merk { color: var(--cream); }
+.hero .eyebrow .merk span { color: var(--coral); }
+
+.hero-titel {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(3rem, 7.2vw, 6rem);
+  line-height: 1.12;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #fff;
+  margin: 0 0 .35em;
+  text-shadow: 0 4px 30px rgba(56, 46, 49, .45);
+}
+
+.hero-socials {
+  display: flex;
+  justify-content: center;
+  gap: 2.4rem;
+  margin: 0 0 3.5rem;
+}
+.hero-socials a { color: #fff; opacity: .92; }
+.hero-socials svg { width: 3.4rem; height: 3.4rem; fill: currentColor; }
+.hero-socials a:hover { color: var(--coral); opacity: 1; }
+
+.hero-meta {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: .1em;
+  color: #fff;
+  margin: 0 0 2.2rem;
+}
+.hero-meta span { color: var(--coral); margin: 0 .4em; }
+
+.hero-knop {
+  border-color: rgba(255, 255, 255, .75);
+  color: #fff;
+  padding: 1.05em 2.4em;
+}
+.hero-knop:hover { background: var(--coral); border-color: var(--coral); color: #fff; }
+
+.hero-pijl {
+  position: absolute;
+  left: 50%;
+  bottom: 2.2rem;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+  color: #fff;
+  animation: zak 2.4s ease-in-out infinite;
+  transition: opacity .3s ease;
+}
+/* De balk is doorzichtig zolang je op de banner staat, dus zonder dit
+   schuift het pijltje er zichtbaar doorheen. site.js zet deze klasse
+   zodra het pijltje de balk raakt. */
+.hero-pijl.is-weg {
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-pijl-label {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: 1.35rem;
+  letter-spacing: .3em;
+  /* De tracking zet ruimte achter de laatste letter; die duwt het woord
+     naar links ten opzichte van de pijl eronder. Dit haalt dat weg. */
+  text-indent: .3em;
+  text-transform: uppercase;
+}
+/* Op een druk bannerbeeld verdwijnt een dunne lijn; de schaduw houdt het
+   pijltje leesbaar zonder er een vlak omheen te zetten. */
+.hero-pijl svg {
+  width: 1.9rem; height: 2.4rem;
+  filter: drop-shadow(0 2px 6px rgba(56, 46, 49, .55));
+}
+.hero-pijl-label { text-shadow: 0 2px 8px rgba(56, 46, 49, .55); }
+.hero-pijl:hover { color: var(--coral); }
+
+@keyframes zak {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, .5rem); }
+}
+
+/* ============================================================
+   Nieuws
+   ============================================================ */
+.nieuws { padding: 4rem 0 8rem; background: var(--bg); }
+
+.sectie-kop {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 4.5rem;
+}
+.sectie-kop .eyebrow { color: var(--coral); }
+.sectie-kop h2 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  letter-spacing: .16em;
+  color: var(--plum);
+  margin-bottom: .6em;
+}
+.sectie-intro { color: var(--text); }
+
+.nieuws-raster {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2.5rem;
+}
+
+.nieuws-item { display: flex; flex-direction: column; }
+
+.nieuws-beeld {
+  display: block;
+  overflow: hidden;
+  background: var(--plum-darker);
+  aspect-ratio: 4 / 3;
+}
+.nieuws-beeld img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease, opacity .3s ease;
+}
+.nieuws-beeld:hover img { transform: scale(1.05); opacity: .88; }
+
+.nieuws-inhoud {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: 1.7rem 0 0;
+}
+.nieuws-inhoud .meta {
+  font-family: var(--font-head);
+  font-weight: 500;
+  font-size: .92rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin: 0 0 .5em;
+}
+.nieuws-inhoud h3 {
+  font-size: 1.5rem;
+  letter-spacing: .08em;
+  margin: 0 0 .55em;
+}
+.nieuws-inhoud h3 a { color: var(--plum); }
+.nieuws-inhoud h3 a:hover { color: var(--coral); }
+.nieuws-inhoud p { font-size: .95rem; margin-bottom: 1.6em; }
+/* De knop hangt onderaan, zodat alle zes blokken op één lijn eindigen
+   ook als de teksten verschillend lang zijn. */
+.nieuws-inhoud .button { margin-top: auto; }
+
+/* ============================================================
+   Voettekst
+   ============================================================ */
+.voettekst {
+  background: var(--plum);
+  color: rgba(241, 235, 196, .7);
+  padding: 5rem 0 2rem;
+  font-size: .95rem;
+}
+.voet-raster {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 3rem;
+}
+.voet-merk .wordmark {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin: 0 0 .6em;
+}
+.voet-merk .wordmark span { color: var(--coral); }
+
+.voettekst h2 {
+  font-size: 1rem;
+  letter-spacing: .28em;
+  color: var(--cream);
+  margin-bottom: 1.2em;
+}
+.voet-kolom li { margin-bottom: .45em; }
+.voet-kolom a { color: rgba(241, 235, 196, .7); }
+.voet-kolom a:hover { color: var(--coral); }
+
+.voet-socials { display: flex; gap: .7rem; margin-bottom: 1.4rem; }
+.voet-socials a {
+  display: grid; place-items: center;
+  width: 2.4rem; height: 2.4rem;
+  border: solid 1px rgba(241, 235, 196, .28);
+  color: var(--cream);
+}
+.voet-socials svg { width: 1rem; height: 1rem; fill: currentColor; }
+.voet-socials a:hover { background: var(--coral); border-color: var(--coral); color: #fff; }
+.voet-adres { color: rgba(241, 235, 196, .55); }
+
+.voet-onder {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: solid 1px rgba(241, 235, 196, .15);
+  font-size: .82rem;
+  color: rgba(241, 235, 196, .5);
+}
+
+/* ============================================================
+   Responsief
+   ============================================================ */
+
+/* Vier nieuwsblokken passen niet meer in drieën. */
+@media (max-width: 1180px) {
+  .nieuws-raster { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Hier vallen menu én knoppen samen onder de hamburger. Het menu
+   staat gecentreerd en de knoppen rechts; zodra die elkaar raken,
+   klapt alles in. */
+@media (max-width: 1100px) {
+  #header .nav-main,
+  .nav-actions { display: none; }
+  .menu-toggle { display: flex; }
+  .header-inner { padding-right: 1rem; }
+}
+
+@media (max-width: 900px) {
+  .voet-raster { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .voet-merk { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  :root { --header-h: 4.5rem; --header-h-klein: 4rem; --hero-blur: 4px; }
+  .container { width: calc(100% - 2.5rem); }
+  .nieuws { padding: 4.5rem 0 5rem; }
+  .nieuws-raster { grid-template-columns: 1fr; gap: 3rem; }
+  .sectie-kop { margin-bottom: 3rem; }
+  .hero-socials { margin-bottom: 2.5rem; }
+  .hero-meta { font-size: 1.35rem; }
+}
+
+@media (max-width: 480px) {
+  .voet-raster { grid-template-columns: 1fr; }
+}
+
+/* Wie beweging liever uit heeft, krijgt een stilstaand beeld. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-pijl { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
