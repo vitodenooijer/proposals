@@ -67,7 +67,7 @@
        zelf en moeten niet meebewegen. */
     [].slice.call(tekening.querySelectorAll('.veeg')).forEach(function (pad) {
       var lengte = pad.getTotalLength();
-      var duur = lengte / SNELHEID * 20;
+      var duur = lengte / SNELHEID;
       pad.style.setProperty('--lengte', lengte);
       pad.style.animationDuration = duur.toFixed(3) + 's';
       pad.style.animationDelay = klok.toFixed(3) + 's';

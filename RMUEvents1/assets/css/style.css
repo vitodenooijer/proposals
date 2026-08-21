@@ -461,12 +461,17 @@ body.menu-open .menu-paneel { transform: translateX(0); }
    het woordmerk er gewoon in één keer. */
 .merk-tekening .veeg {
   fill: none;
-  stroke-width: 38;
+  /* GEEN stroke-width hier: in SVG wint een CSS-regel van het
+     stroke-width-attribuut op het pad zelf, en dan zijn alle streken even
+     dik. De dikte staat per streek in de SVG; zie de opmerking daar. */
   /* Vlakke kop, geen ronde: een ronde kop tekent bij het aanzetten een halve
      schijf, en dat gaf een raar gebogen sliffertje aan het begin van elke
      streek. Vlak leest als een echte penpunt. */
   stroke-linecap: butt;
-  stroke-linejoin: round;
+  /* Scherpe hoeken, geen ronde: bij een ronde hoek blijft de buitenhoek van
+     bijvoorbeeld de R-buik net onbeschilderd. */
+  stroke-linejoin: miter;
+  stroke-miterlimit: 6;
   stroke-dasharray: var(--lengte);
   stroke-dashoffset: var(--lengte);
   animation: teken linear both;
