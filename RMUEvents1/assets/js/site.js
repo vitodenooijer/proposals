@@ -63,15 +63,20 @@
     var PAUZE = 0.03;     /* seconde tussen twee streken */
     var klok = 0.25;      /* even wachten voor hij begint */
 
-    /* Alleen de penstreken: de paden in de clipPath zijn de lettervormen
-       zelf en moeten niet meebewegen. */
-    [].slice.call(tekening.querySelectorAll('.veeg')).forEach(function (pad) {
-      var lengte = pad.getTotalLength();
-      var duur = lengte / SNELHEID;
-      pad.style.setProperty('--lengte', lengte);
-      pad.style.animationDuration = duur.toFixed(3) + 's';
-      pad.style.animationDelay = klok.toFixed(3) + 's';
-      klok += duur + PAUZE;
+    /* Per teken doorlopen, zodat het boerinnetje in de N precies kan
+       beginnen zodra die letter af is. Alleen de penstreken meenemen: de
+       paden in de clipPath zijn de lettervormen zelf en bewegen niet mee. */
+    [].slice.call(tekening.children).forEach(function (groep) {
+      [].slice.call(groep.querySelectorAll('.veeg')).forEach(function (pad) {
+        var lengte = pad.getTotalLength();
+        var duur = lengte / SNELHEID;
+        pad.style.setProperty('--lengte', lengte);
+        pad.style.animationDuration = duur.toFixed(3) + 's';
+        pad.style.animationDelay = klok.toFixed(3) + 's';
+        klok += duur + PAUZE;
+      });
+      var boerin = groep.querySelector('.boerin');
+      if (boerin) boerin.style.animationDelay = klok.toFixed(3) + 's';
     });
   }
 

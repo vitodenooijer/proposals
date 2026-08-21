@@ -480,6 +480,20 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   to { stroke-dashoffset: 0; }
 }
 
+/* Het boerinnetje in de N. Het is geen gekleurd figuur maar een masker:
+   zwart betekent weg. Door de dekking van dat zwart op te laten lopen komt
+   het figuur als uitsparing tevoorschijn, dus de banner blijft eronder
+   zichtbaar — tijdens én na het verschijnen. site.js zet de vertraging;
+   zonder JavaScript is de duur 0 en staat het figuur er meteen, zoals in
+   het logo. */
+.merk-tekening .boerin {
+  fill-opacity: 0;
+  animation: boerin-verschijnt .9s ease both;
+}
+@keyframes boerin-verschijnt {
+  to { fill-opacity: 1; }
+}
+
 .hero-socials {
   display: flex;
   justify-content: center;
@@ -724,5 +738,6 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   html { scroll-behavior: auto; }
   .hero-pijl { animation: none; }
   .merk-tekening .veeg { animation: none; stroke-dashoffset: 0; }
+  .merk-tekening .boerin { animation: none; fill-opacity: 1; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
