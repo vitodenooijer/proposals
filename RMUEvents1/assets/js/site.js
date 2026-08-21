@@ -52,6 +52,29 @@
     }).observe(pijl);
   }
 
+  /* ---------- Woordmerk streek voor streek tekenen ----------
+     Elk pad krijgt een duur die evenredig is met zijn eigen lengte, zodat de
+     "pen" overal even snel beweegt: een lange stok duurt langer dan een kort
+     dwarsstreepje. De vertragingen worden opgeteld, dus de streken volgen
+     elkaar in de volgorde waarin ze in de SVG staan. */
+  var tekening = document.querySelector('.merk-tekening');
+  if (tekening) {
+    var SNELHEID = 1400;  /* eenheden per seconde */
+    var PAUZE = 0.03;     /* seconde tussen twee streken */
+    var klok = 0.25;      /* even wachten voor hij begint */
+
+    /* Alleen de penstreken: de paden in de clipPath zijn de lettervormen
+       zelf en moeten niet meebewegen. */
+    [].slice.call(tekening.querySelectorAll('.veeg')).forEach(function (pad) {
+      var lengte = pad.getTotalLength();
+      var duur = lengte / SNELHEID * 20;
+      pad.style.setProperty('--lengte', lengte);
+      pad.style.animationDuration = duur.toFixed(3) + 's';
+      pad.style.animationDelay = klok.toFixed(3) + 's';
+      klok += duur + PAUZE;
+    });
+  }
+
   /* ---------- Uitklapmenu ---------- */
   var knop = document.getElementById('menu-toggle');
   var paneel = document.getElementById('menu-paneel');
