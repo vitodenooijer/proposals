@@ -38,6 +38,12 @@
   /* Hoeveel de bannervideo vervaagt. Eén plek, zodat de zachte
      schaalvergroting (die de vervaagde randen wegwerkt) meeloopt. */
   --hero-blur: 8px;
+
+  /* Strook onderaan de banner die vrij blijft voor "Lees meer" + pijltje:
+     het blokje zelf (5,7rem) plus de afstand tot de onderrand (2,2rem) en
+     wat lucht. Het pijltje staat absoluut, dus zonder deze reservering
+     schuift de bannerinhoud eroverheen zodra het scherm laag is. */
+  --pijl-baan: 8.5rem;
 }
 
 /* ---------- Reset ---------- */
@@ -151,13 +157,20 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: background-color .35s ease, height .35s ease, box-shadow .35s ease;
 }
 
+/* Drie kolommen met gelijke zijkanten, zodat het menu precies in het midden
+   van het venster staat zonder absolute positionering. Dat laatste liet het
+   menu over de knoppen rechts heen lopen zodra de balk smaller werd. */
 .header-inner {
   position: relative;
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 1.5rem;
-  padding: 0 1.75rem 0 0;
+  /* Geen padding hier: de zijkolommen moeten even breed zijn ten opzichte van
+     het vénster, anders staat het menu net naast het midden. De marge rechts
+     zit daarom op .nav-actions. */
+  padding: 0;
 }
 
 /* --- Logo: alleen de afbeelding, vult het hele vlak.
@@ -167,15 +180,19 @@ ul { margin: 0; padding: 0; list-style: none; }
        vergroting boven de schermrand af. --- */
 #header .logo {
   display: block;
-  align-self: stretch;
+  justify-self: start;
+  /* Expliciete hoogte, niet align-self: stretch. In een raster is dat
+     circulair: de breedte vult dan de kolom en aspect-ratio maakt daar een
+     even hoge doos van, waardoor het logo de hele balk opblies. */
+  height: var(--header-h);
   aspect-ratio: 1;
   margin: 0 0 0 10px;
   padding: 0;
   background: var(--cream);
   line-height: 0;
   transform-origin: left top;
-  transform: translateX(100%) scale(1.5);
-  transition: transform .35s ease;
+  transform: translateX(100%) scale(1.25);
+  transition: transform .35s ease, height .35s ease;
 }
 #header .logo img {
   display: block;
@@ -184,11 +201,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   object-fit: cover;
 }
 
-/* --- Gecentreerd menu --- */
+/* --- Gecentreerd menu ---
+   Gewoon het middelste rastervak; het raster centreert hem horizontaal en
+   verticaal. Eerder stond dit op position: absolute zonder top, en dan bepaalt
+   de "static position" in een flexbox de hoogte — daar verschillen browsers in:
+   Chrome past align-items: center toe, Firefox zet hem tegen de bovenrand. */
 #header .nav-main {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  grid-column: 2;
+  justify-self: center;
 }
 #header .nav-main ul { display: flex; gap: 2.6rem; }
 #header .nav-main a {
@@ -217,7 +237,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* --- Label + twee knoppen rechtsboven --- */
 .nav-actions {
-  margin-left: auto;
+  grid-column: 3;
+  justify-self: end;
+  margin-right: 1.75rem;
   display: flex;
   align-items: center;
   gap: .7rem;
@@ -265,7 +287,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   box-shadow: 0 2px 24px rgba(56, 46, 49, .28);
 }
 /* Het logovlak blijft crème; alleen de balk eromheen verkleurt. */
-#header.is-vast .logo { transform: translateX(0) scale(1); }
+#header.is-vast .logo { height: var(--header-h-klein); transform: translateX(0) scale(1); }
 #header.is-vast .nav-main a { color: rgba(241, 235, 196, .82); }
 #header.is-vast .nav-main a:hover,
 #header.is-vast .nav-main a.is-current { color: var(--coral); }
@@ -401,7 +423,9 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   z-index: 1;
   width: calc(100% - 3rem);
   max-width: 56rem;
-  padding: var(--header-h) 0 6rem;
+  /* Boven: de balk plus wat lucht, zodat de eyebrow er niet tegenaan plakt.
+     Onder: de baan van het pijltje. Beide krimpen mee op lage schermen. */
+  padding: calc(var(--header-h) + clamp(.5rem, 4vh, 2.5rem)) 0 var(--pijl-baan);
 }
 
 /* Meeschalen met .hero-titel. Die staat op clamp(3rem, 7.2vw, 6rem): hij
@@ -415,6 +439,10 @@ body.menu-open .menu-paneel { transform: translateX(0); }
 .hero .eyebrow {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   color: rgba(255, 255, 255, .78);
+  /* De tussenruimtes in de banner lopen mee met de schermhoogte: op een hoog
+     scherm blijft het zoals ontworpen, op een laag scherm maken ze plaats
+     voor de balk erboven en de baan van het pijltje eronder. */
+  margin-bottom: clamp(.4rem, 2.5vh, .9em);
 }
 /* Zelfde behandeling als het woordmerk in de balk en de voettekst:
    "RMU" zwaarder en vol wit, "Events" in koraal. */
@@ -424,12 +452,12 @@ body.menu-open .menu-paneel { transform: translateX(0); }
 .hero-titel {
   font-family: var(--font-script);
   font-weight: 400;
-  font-size: clamp(3rem, 7.2vw, 6rem);
+  font-size: clamp(3rem, 7.2vw, 5rem);
   line-height: 1.12;
   letter-spacing: 0;
   text-transform: none;
   color: #fff;
-  margin: 0 0 .35em;
+  margin: 0 0 clamp(.3rem, 2vh, .35em);
   text-shadow: 0 4px 30px rgba(56, 46, 49, .45);
 }
 
@@ -437,10 +465,10 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   display: flex;
   justify-content: center;
   gap: 2.4rem;
-  margin: 0 0 3.5rem;
+  margin: 0 0 clamp(1rem, 4.5vh, 3.5rem);
 }
 .hero-socials a { color: #fff; opacity: .92; }
-.hero-socials svg { width: 3.4rem; height: 3.4rem; fill: currentColor; }
+.hero-socials svg { width: clamp(2.4rem, 6vh, 3.4rem); height: clamp(2.4rem, 6vh, 3.4rem); fill: currentColor; }
 .hero-socials a:hover { color: var(--coral); opacity: 1; }
 
 .hero-meta {
@@ -449,7 +477,7 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   font-size: 2rem;
   letter-spacing: .1em;
   color: #fff;
-  margin: 0 0 2.2rem;
+  margin: 0 0 clamp(.9rem, 3vh, 2.2rem);
 }
 .hero-meta span { color: var(--coral); margin: 0 .4em; }
 
@@ -636,14 +664,24 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   .nieuws-raster { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Hier vallen menu én knoppen samen onder de hamburger. Het menu
-   staat gecentreerd en de knoppen rechts; zodra die elkaar raken,
-   klapt alles in. */
-@media (max-width: 1100px) {
+/* Tussenmaat: de balk past nog, maar niet ruim. Het label bij de knoppen
+   vervalt en het menu gaat dichter op elkaar; daarmee zakt de benodigde
+   breedte van ~1650px naar ~1250px. */
+@media (max-width: 1650px) {
+  .actions-label { display: none; }
+  #header .nav-main ul { gap: 1.6rem; }
+  .nav-actions .button { padding: .9em 1.4em; }
+}
+
+/* Hieronder is er geen ruimte meer voor menu én knoppen naast het logo,
+   en vallen ze samen onder de hamburger. */
+@media (max-width: 1300px) {
   #header .nav-main,
   .nav-actions { display: none; }
   .menu-toggle { display: flex; }
-  .header-inner { padding-right: 1rem; }
+  /* Terug naar een rij: met alleen het logo en de hamburger over zou het
+     drie-koloms raster de hamburger in het midden zetten. */
+  .header-inner { display: flex; padding-right: 1rem; }
 }
 
 @media (max-width: 900px) {
@@ -655,10 +693,13 @@ body.menu-open .menu-paneel { transform: translateX(0); }
   body { font-size: 16px; }
   :root { --header-h: 4.5rem; --header-h-klein: 4rem; --hero-blur: 4px; }
   .container { width: calc(100% - 2.5rem); }
+  /* Op telefoonformaat is er geen ruimte voor het uitvergrote logo naast de
+     hamburger: hier staat het meteen klein in de hoek, ook bovenaan. */
+  #header .logo { transform: translateX(0) scale(1); }
   .nieuws { padding: 4.5rem 0 5rem; }
   .nieuws-raster { grid-template-columns: 1fr; gap: 3rem; }
   .sectie-kop { margin-bottom: 3rem; }
-  .hero-socials { margin-bottom: 2.5rem; }
+  .hero-socials { margin-bottom: 1.5rem; }
   .hero-meta { font-size: 1.35rem; }
 }
 

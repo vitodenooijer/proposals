@@ -8,17 +8,24 @@
   var hero = document.getElementById('top');
 
   /* ---------- Balk: doorzichtig op de banner, gevuld daarna ----------
-     Een sentinel van 1px onderaan de banner scheelt een scroll-listener:
-     zodra die uit beeld is, is de balk voorbij de banner. */
+     De banner zelf is de wachter. Met de bovenrand van het kijkvenster naar
+     beneden gehaald tot onder de balk valt "raakt de banner de balk niet
+     meer" precies samen met "de balk is de banner voorbij".
+
+     Niet met een los sentinel-blokje onderaan de banner doen: is de banner
+     hoger dan het scherm, dan begint dat blokje onder de onderrand en telt
+     het net zo goed als onzichtbaar, terwijl je juist bovenaan staat. De
+     balk sprong dan meteen in zijn vaste vorm. Bovendien vuurt een
+     observer alleen bij een drempelovergang, en tussen "onder het scherm"
+     en "boven het scherm" is er geen: na een sprong bleef de stand hangen. */
   if (header && hero && 'IntersectionObserver' in window) {
-    var wachter = document.createElement('div');
-    wachter.style.cssText = 'position:absolute;bottom:0;left:0;width:1px;height:1px;pointer-events:none;';
-    hero.style.position = 'relative';
-    hero.appendChild(wachter);
+    /* Eén keer vastleggen: zodra de balk vast staat krimpt hij, en een
+       meebewegende grens laat hem heen en weer klapperen. */
+    var balkHoogte = header.offsetHeight;
 
     new IntersectionObserver(function (posities) {
       header.classList.toggle('is-vast', !posities[0].isIntersecting);
-    }, { rootMargin: '-' + header.offsetHeight + 'px 0px 0px 0px' }).observe(wachter);
+    }, { rootMargin: '-' + balkHoogte + 'px 0px 0px 0px' }).observe(hero);
   } else if (header) {
     // Terugval voor oudere browsers.
     var kijk = function () {
