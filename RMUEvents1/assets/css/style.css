@@ -627,6 +627,40 @@ body.menu-open .menu-paneel { transform: translateX(0); }
    ook als de teksten verschillend lang zijn. */
 .nieuws-inhoud .button { margin-top: auto; }
 
+/* ---------- Sierrand: het Arnemuidse slangenpatroon ---------- */
+/* Staat binnen <main>, dus loopt mee met het nieuwsgedeelte en blijft weg
+   bij de balk, de banner en de voettekst. */
+main { position: relative; }
+
+.randpatroon {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 147px;
+  /* Alleen versiering: de tekst wint altijd. */
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("../img/slangenpatroon.svg");
+  background-repeat: repeat-y;
+  background-position: top center;
+}
+/* Vast aan de schermrand, net als op de bestaande site. */
+.randpatroon--links  { left: 2rem; }
+/* Gespiegeld, zodat de slang aan beide kanten naar binnen wijst. */
+.randpatroon--rechts { right: 2rem; transform: scaleX(-1); }
+
+/* Pas tonen als er naast de container echt marge over is: 147px tegel plus
+   2rem afstand tot de schermrand, aan weerskanten. */
+@media (min-width: 1600px) {
+  .randpatroon { display: block; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .randpatroon { opacity: 0; animation: randIn 1.2s ease .3s forwards; }
+}
+@keyframes randIn { to { opacity: 1; } }
+
 /* ============================================================
    Voettekst
    ============================================================ */
