@@ -452,7 +452,7 @@ body.menu-open .menu-paneel { transform: translateX(0); }
 .hero-titel {
   font-family: var(--font-script);
   font-weight: 400;
-  font-size: clamp(3rem, 7.2vw, 5rem);
+  font-size: clamp(2.5rem, 7.2vw, 5rem);
   line-height: 1.12;
   letter-spacing: 0;
   text-transform: none;
